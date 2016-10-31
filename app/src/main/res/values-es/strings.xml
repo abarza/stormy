@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="error_title">Oops Perdón!</string>
+  <string name="error_message">Ocurrió un error. Intenta otra vez</string>
+  <string name="error_ok_button_text">OK</string>
+  <string name="network_error">Conexión no disponible!</string>
+</resources>

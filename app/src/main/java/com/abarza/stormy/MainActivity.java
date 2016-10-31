@@ -1,8 +1,12 @@
 package com.abarza.stormy;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -29,31 +33,55 @@ public class MainActivity extends AppCompatActivity {
     String forecastURL = "https://api.forecast.io/forecast/" + apiKey + "/" + latitude + "," +
         longitude;
 
-    OkHttpClient client = new OkHttpClient();
-    Request request = new Request.Builder()
-        .url(forecastURL)
-        .build();
+    if (isNetworkAvailable()) {
+      OkHttpClient client = new OkHttpClient();
+      Request request = new Request.Builder()
+          .url(forecastURL)
+          .build();
 
-    Call call = client.newCall(request);
+      Call call = client.newCall(request);
 
-    call.enqueue(new Callback() {
-      @Override
-      public void onFailure(Call call, IOException e) {
-      }
-
-      @Override
-      public void onResponse(Call call, Response response) throws IOException {
-        try {
-          if (response.isSuccessful()) {
-            Log.v(TAG, response.body().string());
-          }
-        } catch (IOException e) {
-          Log.d(TAG, "Exception caught: ", e);
+      call.enqueue(new Callback() {
+        @Override
+        public void onFailure(Call call, IOException e) {
         }
-      }
-    });
+
+        @Override
+        public void onResponse(Call call, Response response) throws IOException {
+          try {
+            Log.d(TAG, response.body().string());
+            if (response.isSuccessful()) {
+              Log.d(TAG, "Connected successfully");
+
+            } else {
+              alertUserAboutError();
+            }
+          } catch (IOException e) {
+            Log.d(TAG, "Exception caught: ", e);
+          }
+        }
+      });
+    } else {
+      Toast.makeText(this, R.string.network_error, Toast.LENGTH_LONG).show();
+    }
 
     Log.d(TAG, "Main UI CODE IS RUNNING");
 
+  }
+
+  private boolean isNetworkAvailable() {
+    ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+    NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+
+    boolean isAvailable = false;
+    if (networkInfo != null && networkInfo.isConnected()) {
+      isAvailable = true;
+    }
+    return isAvailable;
+  }
+
+  private void alertUserAboutError() {
+    AlertDialogFragment dialog = new AlertDialogFragment();
+    dialog.show(getSupportFragmentManager(), "error_dialog");
   }
 }
