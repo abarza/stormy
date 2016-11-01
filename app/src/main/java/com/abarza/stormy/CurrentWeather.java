@@ -16,6 +16,8 @@ public class CurrentWeather {
   private double mHumidity;
   private double mPrecipChance;
   private String mTimezone;
+  private String mSummary;
+  private int iconId;
 
   public String getTimezone() {
     return mTimezone;
@@ -33,6 +35,49 @@ public class CurrentWeather {
     mIcon = icon;
   }
 
+  public int getIconId() {
+
+    int iconId;
+
+    switch (mIcon) {
+      case "clear-day":
+        iconId = R.drawable.clear_day;
+        break;
+      case "clear-night":
+        iconId = R.drawable.clear_day;
+        break;
+      case "rain":
+        iconId = R.drawable.rain;
+        break;
+      case "snow":
+        iconId = R.drawable.snow;
+        break;
+      case "sleet":
+        iconId = R.drawable.sleet;
+        break;
+      case "wind":
+        iconId = R.drawable.wind;
+        break;
+      case "fog":
+        iconId = R.drawable.fog;
+        break;
+      case "cloudy":
+        iconId = R.drawable.cloudy;
+        break;
+      case "partly-cloudy-day":
+        iconId = R.drawable.partly_cloudy;
+        break;
+      case "partly-cloudy-night":
+        iconId = R.drawable.cloudy_night;
+        break;
+      default:
+        iconId = R.drawable.clear_day;
+        break;
+    }
+
+    return iconId;
+  }
+
   public long getTime() {
     return mTime;
   }
@@ -42,8 +87,7 @@ public class CurrentWeather {
     formatter.setTimeZone(TimeZone.getTimeZone(getTimezone()));
     Date dateTime = new Date(getTime() * 1000);
     String timeString = formatter.format(dateTime);
-
-    return  timeString;
+    return timeString;
   }
 
   public void setTime(long time) {
@@ -59,14 +103,14 @@ public class CurrentWeather {
   }
 
   public int getTemperatureAsInt() {
-    int temperatureAsInt;
-    return temperatureAsInt = (int) Math.round(getTemperature());
+    int temperatureAsInt = (int) Math.round(getTemperature());
+    return temperatureAsInt;
 
   }
 
   public int getTemperatureAsCelcius() {
-    int temperatureAsCelcius;
-    return temperatureAsCelcius = ((getTemperatureAsInt() - 32) * 5)/9;
+    int temperatureAsCelcius = ((getTemperatureAsInt() - 32) * 5) / 9;
+    return temperatureAsCelcius;
   }
 
   public double getHumidity() {
@@ -93,5 +137,10 @@ public class CurrentWeather {
     mSummary = summary;
   }
 
-  private String mSummary;
+  public String doubleToPercent(Double d) {
+    float percent = (float) (d * 100);
+    String percentAsString = String.format("%.0f%%", percent);
+    return percentAsString;
+  }
+
 }

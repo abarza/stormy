@@ -2,9 +2,11 @@
 <RelativeLayout
     android:id="@+id/activity_main"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFfc970b"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -12,7 +14,121 @@
     tools:context="com.abarza.stormy.MainActivity">
 
   <TextView
+      android:id="@+id/temperature_label"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="Hello World!"/>
+      android:layout_centerHorizontal="true"
+      android:layout_centerVertical="true"
+      android:text="100"
+      android:textColor="@android:color/white"
+      android:textSize="150sp"/>
+
+  <ImageView
+      android:id="@+id/imageView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignTop="@+id/temperature_label"
+      android:layout_marginTop="50dp"
+      android:layout_toEndOf="@+id/temperature_label"
+      android:layout_toRightOf="@+id/temperature_label"
+      app:srcCompat="@drawable/degree"/>
+
+  <TextView
+      android:id="@+id/time_label"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_above="@+id/temperature_label"
+      android:layout_centerHorizontal="true"
+      android:text="At 5:00 PM it will be"
+      android:textColor="#B0FFFFFF"/>
+
+  <TextView
+      android:id="@+id/location_label"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_above="@+id/time_label"
+      android:layout_centerHorizontal="true"
+      android:layout_marginBottom="60dp"
+      android:text="Alcatraz Island, CA"
+      android:textColor="@android:color/white"
+      android:textSize="20sp"/>
+
+  <ImageView
+      android:id="@+id/iconImageView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignBottom="@+id/location_label"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"
+      app:srcCompat="@drawable/cloudy_night"/>
+
+  <LinearLayout
+      android:id="@+id/humidity"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"
+      android:layout_below="@+id/temperature_label"
+      android:weightSum="1"
+      android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:orientation="vertical">
+
+      <TextView
+          android:id="@+id/humidity_label"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="HUMIDITY"
+          android:gravity="center_horizontal"
+          android:textColor="#80FFFFFF"/>
+
+      <TextView
+          android:id="@+id/humidity_value"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="10%"
+          android:gravity="center_horizontal"
+          android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:orientation="vertical">
+
+      <TextView
+          android:id="@+id/precipitation_label"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="TextView"
+          android:gravity="center_horizontal"
+          android:textColor="#80ffffff"/>
+
+      <TextView
+          android:id="@+id/precipitation_value"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="5%"
+          android:gravity="center_horizontal"
+          android:textColor="@android:color/white"/>
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+  <TextView
+      android:text="Partly Cloudy"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/textView8"
+      android:gravity="center_horizontal"
+      android:textColor="@android:color/white"
+      android:layout_below="@+id/humidity"
+      android:layout_centerHorizontal="true"
+      android:layout_marginTop="29dp"/>
 </RelativeLayout>

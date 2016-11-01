@@ -115,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
     Log.i(TAG, "Temperature: " + temperature + "ºF");
     Log.i(TAG, "Temperature: " + currentWeather.getTemperatureAsInt() + "ºF");
     Log.i(TAG, "Temperature: " + currentWeather.getTemperatureAsCelcius() + "ºC");
+    Log.i(TAG, "Precipitation Percent: " + currentWeather.doubleToPercent(precipChance));
+    Log.i(TAG, "Humidity percent: " + currentWeather.doubleToPercent(humidity));
 
     return currentWeather;
 
