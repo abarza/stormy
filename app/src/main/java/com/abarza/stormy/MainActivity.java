@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -19,6 +22,8 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
 
   private static final String TAG = MainActivity.class.getSimpleName();
+
+  private CurrentWeather mCurrentWeather;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -49,16 +54,21 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onResponse(Call call, Response response) throws IOException {
           try {
-            Log.d(TAG, response.body().string());
+            String jsonData = response.body().string();
+            Log.d(TAG, jsonData);
             if (response.isSuccessful()) {
               Log.d(TAG, "Connected successfully");
+              mCurrentWeather = getCurrentDetails(jsonData);
 
             } else {
               alertUserAboutError();
             }
           } catch (IOException e) {
             Log.d(TAG, "Exception caught: ", e);
+          } catch (JSONException e) {
+            Log.d(TAG, "Exception caught: ", e);
           }
+
         }
       });
     } else {
@@ -66,6 +76,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
     Log.d(TAG, "Main UI CODE IS RUNNING");
+
+  }
+
+  private CurrentWeather getCurrentDetails(String jsonData) throws JSONException {
+
+    JSONObject forecast = new JSONObject(jsonData);
+
+    JSONObject currently = forecast.getJSONObject("currently");
+    String TimeZone = forecast.getString("timezone");
+
+    CurrentWeather currentWeather = new CurrentWeather();
+    currentWeather.setHumidity(currently.getDouble("humidity"));
+    currentWeather.setTime(currently.getLong("time"));
+    currentWeather.setIcon(currently.getString("icon"));
+    currentWeather.setPrecipChance(currently.getDouble("precipProbability"));
+    currentWeather.setSummary(currently.getString("summary"));
+    currentWeather.setTimezone(TimeZone);
+
+    Long time = currentWeather.getTime();
+    String icon = currentWeather.getIcon();
+    Double precipChance = currentWeather.getPrecipChance();
+    String summary = currentWeather.getSummary();
+    Double humidity = currentWeather.getHumidity();
+
+
+
+    Log.i(TAG, "From JSON: " + TimeZone);
+    Log.i(TAG, "Currently" + currently);
+    Log.i(TAG, "Humidity: " + humidity.toString());
+    Log.i(TAG, "Time: " + time.toString());
+    Log.i(TAG, "Icon: " + icon);
+    Log.i(TAG, "PrecipChance: " + precipChance.toString());
+    Log.i(TAG, "summary: " + summary);
+    Log.i(TAG, "Formatted time: " + currentWeather.getFormattedTime());
+
+    return currentWeather;
+
 
   }
 
