@@ -93,12 +93,14 @@ public class MainActivity extends AppCompatActivity {
     currentWeather.setPrecipChance(currently.getDouble("precipProbability"));
     currentWeather.setSummary(currently.getString("summary"));
     currentWeather.setTimezone(TimeZone);
+    currentWeather.setTemperature(currently.getDouble("temperature"));
 
     Long time = currentWeather.getTime();
     String icon = currentWeather.getIcon();
     Double precipChance = currentWeather.getPrecipChance();
     String summary = currentWeather.getSummary();
     Double humidity = currentWeather.getHumidity();
+    Double temperature = currentWeather.getTemperature();
 
 
 
@@ -110,6 +112,9 @@ public class MainActivity extends AppCompatActivity {
     Log.i(TAG, "PrecipChance: " + precipChance.toString());
     Log.i(TAG, "summary: " + summary);
     Log.i(TAG, "Formatted time: " + currentWeather.getFormattedTime());
+    Log.i(TAG, "Temperature: " + temperature + "ºF");
+    Log.i(TAG, "Temperature: " + currentWeather.getTemperatureAsInt() + "ºF");
+    Log.i(TAG, "Temperature: " + currentWeather.getTemperatureAsCelcius() + "ºC");
 
     return currentWeather;
 

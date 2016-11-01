@@ -58,6 +58,17 @@ public class CurrentWeather {
     mTemperature = temperature;
   }
 
+  public int getTemperatureAsInt() {
+    int temperatureAsInt;
+    return temperatureAsInt = (int) Math.round(getTemperature());
+
+  }
+
+  public int getTemperatureAsCelcius() {
+    int temperatureAsCelcius;
+    return temperatureAsCelcius = ((getTemperatureAsInt() - 32) * 5)/9;
+  }
+
   public double getHumidity() {
     return mHumidity;
   }
