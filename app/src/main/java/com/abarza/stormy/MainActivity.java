@@ -1,11 +1,15 @@
 package com.abarza.stormy;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -13,6 +17,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -25,10 +31,18 @@ public class MainActivity extends AppCompatActivity {
 
   private CurrentWeather mCurrentWeather;
 
+  @BindView(R.id.time_label) TextView mTimeLabel;
+  @BindView(R.id.temperature_label) TextView mTemperatureLabel;
+  @BindView(R.id.humidity_value) TextView mHumidityValue;
+  @BindView(R.id.precipitation_value) TextView mPrecipValue;
+  @BindView(R.id.summary_label) TextView mSummaryLabel;
+  @BindView(R.id.icon_imageView) ImageView mIconImageView;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    ButterKnife.bind(this);
 
 
     String apiKey = "188141e178bcf497887adfc53fa8d44f";
@@ -59,6 +73,13 @@ public class MainActivity extends AppCompatActivity {
             if (response.isSuccessful()) {
               Log.d(TAG, "Connected successfully");
               mCurrentWeather = getCurrentDetails(jsonData);
+              runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                  updateDisplay();
+                }
+              });
+
 
             } else {
               alertUserAboutError();
@@ -79,6 +100,36 @@ public class MainActivity extends AppCompatActivity {
 
   }
 
+  private void updateDisplay() {
+    Double humidity = mCurrentWeather.getHumidity();
+    Double precipChance = mCurrentWeather.getPrecipChance();
+    Long time = mCurrentWeather.getTime();
+    String icon = mCurrentWeather.getIcon();
+    String summary = mCurrentWeather.getSummary();
+    Double temperature = mCurrentWeather.getTemperature();
+
+    Drawable drawable = ContextCompat.getDrawable(this, mCurrentWeather.getIconId());
+
+    Log.i(TAG, "Humidity: " + humidity.toString());
+    Log.i(TAG, "Time: " + time.toString());
+    Log.i(TAG, "Icon: " + icon);
+    Log.i(TAG, "PrecipChance: " + precipChance.toString());
+    Log.i(TAG, "summary: " + summary);
+    Log.i(TAG, "Formatted time: " + mCurrentWeather.getFormattedTime());
+    Log.i(TAG, "Temperature: " + temperature + "ºF");
+    Log.i(TAG, "Temperature: " + mCurrentWeather.getTemperatureAsInt() + "ºF");
+    Log.i(TAG, "Temperature: " + mCurrentWeather.getTemperatureAsCelcius() + "ºC");
+    Log.i(TAG, "Precipitation Percent: " + mCurrentWeather.doubleToPercent(precipChance));
+    Log.i(TAG, "Humidity percent: " + mCurrentWeather.doubleToPercent(humidity));
+
+    mTemperatureLabel.setText(String.valueOf(mCurrentWeather.getTemperatureAsCelcius()));
+    mTimeLabel.setText(String.valueOf(mCurrentWeather.getFormattedTime()));
+    mHumidityValue.setText(mCurrentWeather.doubleToPercent(humidity));
+    mPrecipValue.setText(mCurrentWeather.doubleToPercent(precipChance));
+    mSummaryLabel.setText(summary);git
+    mIconImageView.setImageDrawable(drawable);
+  }
+
   private CurrentWeather getCurrentDetails(String jsonData) throws JSONException {
 
     JSONObject forecast = new JSONObject(jsonData);
@@ -95,28 +146,9 @@ public class MainActivity extends AppCompatActivity {
     currentWeather.setTimezone(TimeZone);
     currentWeather.setTemperature(currently.getDouble("temperature"));
 
-    Long time = currentWeather.getTime();
-    String icon = currentWeather.getIcon();
-    Double precipChance = currentWeather.getPrecipChance();
-    String summary = currentWeather.getSummary();
-    Double humidity = currentWeather.getHumidity();
-    Double temperature = currentWeather.getTemperature();
-
-
-
     Log.i(TAG, "From JSON: " + TimeZone);
     Log.i(TAG, "Currently" + currently);
-    Log.i(TAG, "Humidity: " + humidity.toString());
-    Log.i(TAG, "Time: " + time.toString());
-    Log.i(TAG, "Icon: " + icon);
-    Log.i(TAG, "PrecipChance: " + precipChance.toString());
-    Log.i(TAG, "summary: " + summary);
-    Log.i(TAG, "Formatted time: " + currentWeather.getFormattedTime());
-    Log.i(TAG, "Temperature: " + temperature + "ºF");
-    Log.i(TAG, "Temperature: " + currentWeather.getTemperatureAsInt() + "ºF");
-    Log.i(TAG, "Temperature: " + currentWeather.getTemperatureAsCelcius() + "ºC");
-    Log.i(TAG, "Precipitation Percent: " + currentWeather.doubleToPercent(precipChance));
-    Log.i(TAG, "Humidity percent: " + currentWeather.doubleToPercent(humidity));
+
 
     return currentWeather;
 

@@ -19,7 +19,7 @@
       android:layout_height="wrap_content"
       android:layout_centerHorizontal="true"
       android:layout_centerVertical="true"
-      android:text="100"
+      android:text=""
       android:textColor="@android:color/white"
       android:textSize="150sp"/>
 
@@ -39,7 +39,7 @@
       android:layout_height="wrap_content"
       android:layout_above="@+id/temperature_label"
       android:layout_centerHorizontal="true"
-      android:text="At 5:00 PM it will be"
+      android:text=""
       android:textColor="#B0FFFFFF"/>
 
   <TextView
@@ -54,7 +54,7 @@
       android:textSize="20sp"/>
 
   <ImageView
-      android:id="@+id/iconImageView"
+      android:id="@+id/icon_imageView"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_alignBottom="@+id/location_label"
@@ -69,8 +69,8 @@
       android:layout_alignParentLeft="true"
       android:layout_alignParentStart="true"
       android:layout_below="@+id/temperature_label"
-      android:weightSum="1"
-      android:orientation="horizontal">
+      android:orientation="horizontal"
+      android:weightSum="1">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -82,16 +82,16 @@
           android:id="@+id/humidity_label"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="HUMIDITY"
           android:gravity="center_horizontal"
+          android:text="HUMIDITY"
           android:textColor="#80FFFFFF"/>
 
       <TextView
           android:id="@+id/humidity_value"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="10%"
           android:gravity="center_horizontal"
+          android:text=""
           android:textColor="@android:color/white"/>
     </LinearLayout>
 
@@ -105,16 +105,16 @@
           android:id="@+id/precipitation_label"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="TextView"
           android:gravity="center_horizontal"
+          android:text="TextView"
           android:textColor="#80ffffff"/>
 
       <TextView
           android:id="@+id/precipitation_value"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="5%"
           android:gravity="center_horizontal"
+          android:text=""
           android:textColor="@android:color/white"/>
 
     </LinearLayout>
@@ -122,13 +122,14 @@
   </LinearLayout>
 
   <TextView
-      android:text="Partly Cloudy"
+      android:id="@+id/summary_label"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:id="@+id/textView8"
-      android:gravity="center_horizontal"
-      android:textColor="@android:color/white"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"
       android:layout_below="@+id/humidity"
-      android:layout_centerHorizontal="true"
-      android:layout_marginTop="29dp"/>
+      android:layout_marginTop="29dp"
+      android:gravity="center_horizontal"
+      android:text=""
+      android:textColor="@android:color/white"/>
 </RelativeLayout>
