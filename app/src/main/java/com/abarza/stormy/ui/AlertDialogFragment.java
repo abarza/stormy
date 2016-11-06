@@ -1,10 +1,12 @@
-package com.abarza.stormy;
+package com.abarza.stormy.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+
+import com.abarza.stormy.R;
 
 /**
  * Created by abarza on 31-10-16.

@@ -1,4 +1,6 @@
-package com.abarza.stormy;
+package com.abarza.stormy.weather;
+
+import com.abarza.stormy.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,7 +11,7 @@ import java.util.TimeZone;
  * Created by abarza on 31-10-16.
  */
 
-public class CurrentWeather {
+public class Current {
   private String mIcon;
   private long mTime;
   private double mTemperature;
